@@ -1,0 +1,50 @@
+﻿<Window x:Class="WpBrute.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        mc:Ignorable="d"
+        xmlns:viewModels="clr-namespace:WpBrute.ViewModels"
+        Title="MainWindow" Height="450" Width="800">
+    <Window.DataContext>
+        <viewModels:MainPageViewModel/>
+    </Window.DataContext>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0*"/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.ColumnSpan="2">
+
+            <StackPanel Grid.Row="0" Grid.Column="0">
+                <ListBox Grid.Column="0" ItemsSource="{Binding Data}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Margin="5">
+                                <TextBlock Text="{Binding Path=Login}" />
+                                <TextBlock Text="{Binding Path=Password}" />
+                                <TextBlock Text="{Binding Path=Url}" />
+                                <TextBlock Text="{Binding Path=Status}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                <Button Content="Выбрать файл со ссылками" Command="{Binding GetLinks}" Margin="20"/>
+            </StackPanel>
+        </ScrollViewer>
+        <StackPanel Grid.Row="0" Grid.Column="2">
+            <TextBlock Text="Количество потоков"></TextBlock>
+            <TextBox  Text="{Binding MaxThreads}"></TextBox>
+            <Button Content="Запустить парсер" Command="{Binding Start}" Margin="20"/>
+            <Button Content="Выбрать папку для сохранения результата" Command="{Binding SelectFolder}" Margin="20"/>
+            <Button Content="Сохранить результат" IsEnabled="{Binding CanSave}" Command="{Binding SaveResult}" Margin="20"/>
+            <TextBlock Text="{Binding ErrorText}"></TextBlock>
+        </StackPanel>
+    </Grid>
+</Window>
